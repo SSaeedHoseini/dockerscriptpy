@@ -6,7 +6,7 @@ import docker
 
 import progress as output
 
-client = docker.from_env()
+client = docker.from_env(timeout=300)
 
 parser = argparse.ArgumentParser()
 
@@ -39,7 +39,7 @@ if total is not 0:
             
             if os.path.isfile(full_path):
                 with open(full_path, 'rb') as f:
-                    client.images.load(f)
+                    client.images.load(f.read())
                 result[img_name] = 'Ok.'
                 output.printProgressBar(number, total, prefix = 'Progress:', suffix = img_name, autosize = True)
         except:
