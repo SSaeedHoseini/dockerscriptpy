@@ -16,7 +16,7 @@ parser.add_argument("--image", "-i", help="image name that need to load")
 args = parser.parse_args()
 
 if not args.path:
-    args.path = os.getcwd()
+    args.path = '{}/image/'.format(os.getcwd()).replace('\\','/')
 
 if not args.image:
     image_list = [i for i in os.listdir(args.path) if i.endswith('.tar')]
@@ -35,7 +35,8 @@ if total is not 0:
     for img_name in image_list:
         number = number + 1
         try:
-            full_path = '{}/{}'.format(args.path,img_name)
+            full_path = '{}{}'.format(args.path,img_name)
+            
             if os.path.isfile(full_path):
                 with open(full_path, 'rb') as f:
                     client.images.load(f)
